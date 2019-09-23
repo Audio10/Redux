@@ -319,9 +319,57 @@ export const traerTodos = () => async (dispatch) => {
 }
 ```
 
+# Archivos Types
 
+Son archivos que llevan las variables del **reducer** y el **action** para evitar errores de Sintaxis que posiblemente no detecte el navegador.
 
+# Casos de llamas Asíncrona.
 
+1. Cuando esta cargando.
+2. Cuando fue exitoso.
+3. Cuando fue un Error.
 
+# Conectar Redux a componentes presentaciones.
 
+Dentro del componente se debe importar connect, y como este es un componente presentacional su único parámetro es props por lo cual debe estar especificado.
+
+Después al final debemos hacer el método mapStateToProps para asignar el reducer (state) y conectarlo al componente.
+
+```jsx
+import React from "react";
+import { connect } from "react-redux";
+
+const Tabla = (props) => {
+    const ponerFilas = () =>
+    props.usuarios.map(usuario => (
+      <tr key={usuario.id}>
+        <td>{usuario.name}</td>
+        <td>{usuario.email}</td>
+        <td>{usuario.website}</td>
+      </tr>
+    ));
+
+  return (
+    <div>
+      <table className="tabla">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Enlace</th>
+          </tr>
+        </thead>
+        <tbody>{ponerFilas()}</tbody>
+      </table>
+    </div>
+  );
+};
+
+const mapStateToProps = (reducers) =>{
+  return reducers.usuariosReducer
+}
+
+export default connect(mapStateToProps)(Tabla);
+
+```
 
