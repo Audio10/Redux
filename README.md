@@ -373,3 +373,62 @@ export default connect(mapStateToProps)(Tabla);
 
 ```
 
+
+
+## Parametros por URL
+
+
+
+Para poder tomar un parametro y definirlo como prop dentro de la url usamos la sintaxis **:variable**
+
+
+
+```javascript
+<Route exact path="/publicaciones/:key" component={Publicaciones} />
+```
+
+
+
+### App contenedora.
+
+```javascript
+import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Menu from './Menu';
+import Usuarios from './Usuarios';
+import Publicaciones from './Publicaciones';
+
+const Tareas = () => <div> Tareas </div>;
+
+const App = () => (
+  <BrowserRouter>
+    <Menu />
+    <div className="margen">
+      <Route exact path="/" component={Usuarios} />
+      <Route exact path="/tareas" component={Tareas} />
+      <Route exact path="/publicaciones/:key" component={Publicaciones} />
+    </div>
+  </BrowserRouter>
+);
+
+export default App;
+
+```
+
+
+
+### Componente
+
+Para obtener ese parametro en el componente se obtiene de la siguiente manera.
+
+```javascript
+import React, { Component } from 'react';
+
+export default class Publicaciones extends Component {
+  render() {
+     // Donde en props existe una variable match que contiene params, seguida de la variable de la URL
+    return <div>{this.props.match.params.key}</div>;
+  }
+}
+```
+
